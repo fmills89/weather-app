@@ -1,0 +1,11 @@
+:root {
+    --primary: #9caea9; 
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--primary);
+}
