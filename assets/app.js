@@ -1,11 +1,47 @@
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city")
 var cityContainerEl = document.querySelector("#city-container");
-var citySearchTerm = document.querySelector("#city-search-term");
+var searchHistoryEl = document.querySelector("#search-history");
 var forecastContainerEl = document.querySelector("#forecast-container");
 
 
-let APIkey = "a72e3fb63a67ce75037508eeb42b61ef";
+var APIkey = "a72e3fb63a67ce75037508eeb42b61ef";
+var cities = []
+
+var loadCities = () => {
+    var citiesLoaded = localStorage.getItem('cities')
+    if(!citiesLoaded) {
+        return false;
+    }
+
+    citiesLoaded = JSON.parse(citiesLoaded);
+
+    for(var i = 0; i < citiesLoaded.length; i++) {
+        displaySearchedCities(citiesLoaded[i])
+        citiesLoaded.push(citiesLoaded[i])
+    }
+}
+
+var saveCities = () => {
+    localStorage.setItem("cities", JSON.stringify(cities));
+}
+
+var displaySearchedCities = (city) => {
+    var cityCardEl = document.createElement("div");
+    cityCardEl.setAttribute("class", "card");
+    var cityCardNameEl = document.createElement("div");
+    cityCardNameEl.setAttribute("class", "card-body searched-city");
+    cityCardNameEl.textContent = city;
+    
+    cityCardEl.appendChild(cityCardNameEl)
+
+    cityCardEl.addEventListener("click", function () {
+        getCityDetails(city);
+    });
+
+    searchHistoryEl.appendChild(cityCardEl)
+
+}
 
 var formSubmitHandler = (e) => {
     e.preventDefault();
@@ -34,6 +70,13 @@ var getCityDetails = (city) => {
         var currentLat = (data.coord.lat);
         var currentLon = (data.coord.lon);
             console.log(currentLat);
+
+        var prevSearch = cities.includes(cityName)
+        if (!prevSearch) {
+            cities.push(cityName)
+            saveCities()
+            displaySearchedCities(cityName)
+        }
 
             getWeatherDetails(cityName, currentLat, currentLon);
         });
@@ -109,15 +152,53 @@ var displayForcasted = (data) => {
 
     forecastContainerEl.textContent = "";
 
-    for (let i = 0; i < 5; i++) {
-        let cityForecast = Math.round(data.daily[i].temp.day);
-        let windForecast = data.daily[i].wind_speed;
-        let humidityForecast = data.daily[i].humidity;
-        
-       
+    for (var i = 0; i < 5; i++) {
+        var cityForecast = Math.round(data.daily[i].temp.day);
+        var windForecast = data.daily[i].wind_speed;
+        var humidityForecast = data.daily[i].humidity;
+        var forecastIcon = data.daily[i].weather[0].icon;
+        console.log(cityForecast);
+        console.log(forecastIcon);
+
+        var cardEl = document.createElement("div");
+        cardEl.setAttribute("class", "card col-xl-2 col-md-5 col-sm-10 mx-3 my-2 bg-primary text-white text-center");
+
+        var cardBodyEl = document.createElement("div");
+        cardBodyEl.setAttribute("class","card-body");
+
+        var cardDateEl = document.createElement("h6");
+        cardDateEl.textContent = moment().add(i, 'days').format('L');
+
+        var cardIconEl = document.createElement("img");
+        cardIconEl.setAttribute("src", "https://openweathermap.org/img/wn/" + forecastIcon + "@2x.png")
+
+        var cardTempEl = document.createElement("p");
+        cardTempEl.setAttribute("class", "card-text");
+        cardTempEl.textContent = "Temperature: " + cityForecast + "°F";
+
+        var cardWindEl = document.createElement("p");
+        cardWindEl.setAttribute("class", "card-text");
+        cardWindEl.textContent = "Wind: " + windForecast;
+
+        var cardHumidEl = document.createElement("p");
+        cardHumidEl.setAttribute("class", "card-text");
+        cardHumidEl.textContent = "Humidity: " + humidityForecast + "%";
+
+        cardBodyEl.appendChild(cardDateEl);
+        cardBodyEl.appendChild(cardIconEl);
+        cardBodyEl.appendChild(cardTempEl);
+        cardBodyEl.appendChild(cardWindEl);
+        cardBodyEl.appendChild(cardHumidEl);
+
+        cardEl.appendChild(cardBodyEl);
+        forecastContainerEl.appendChild(cardEl);
+
+        userFormEl.reset();
 
     }
 };
+
+loadCities();
 
 
 
