@@ -7,41 +7,39 @@ var forecastContainerEl = document.querySelector('#forecast-container');
 var APIkey = 'a72e3fb63a67ce75037508eeb42b61ef';
 var cities = [];
 
-// var loadCities = () => {
-//   var citiesLoaded = localStorage.getItem('cities');
-//   if (!citiesLoaded) {
-//     return false;
-//   }
+var loadCities = () => {
+  var citiesLoaded = localStorage.getItem('cities');
+  if (!citiesLoaded) {
+    return false;
+  }
 
-//   citiesLoaded = JSON.parse(citiesLoaded);
+  citiesLoaded = JSON.parse(citiesLoaded);
+  console.log(citiesLoaded);
 
-//   for (var i = 0; i < citiesLoaded.length; i++) {
-//     displaySearchedCities(citiesLoaded[i]);
-//     citiesLoaded.push(citiesLoaded[i]);
-//   }
-// };
+  for (var i = 0; i < citiesLoaded.length; i++) {
+    displaySearchedCities(citiesLoaded[i]);
+    cities.push(citiesLoaded[i]);
+  }
+};
 
-// var saveCities = () => {
-//     localStorage.setItem("cities", JSON.stringify(cities));
-// }
+var saveCities = () => {
+  localStorage.setItem('cities', JSON.stringify(cities));
+};
 
 // function working - addl styling to dynamically displayed elements done
 // revist event listener to show city details on click
 var displaySearchedCities = city => {
   var cityCardEl = document.createElement('div');
-  cityCardEl.setAttribute(
-    'class',
-    'border rounded-md p-4 m-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 text-center'
-  );
+  cityCardEl.setAttribute('class', 'button pl-2 ml-2');
   var cityCardNameEl = document.createElement('div');
   cityCardNameEl.setAttribute('class', 'card-body searched-city');
   cityCardNameEl.textContent = city;
 
   cityCardEl.appendChild(cityCardNameEl);
 
-  //   cityCardEl.addEventListener('click', function () {
-  //     getCityDetails(city);
-  //   });
+  cityCardEl.addEventListener('click', function () {
+    getCityDetails(city);
+  });
 
   searchHistoryEl.appendChild(cityCardEl);
 };
@@ -72,7 +70,7 @@ var getCityDetails = city => {
   fetch(apiURL).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
-        console.log(data);
+        // console.log(data);
 
         // creating vars for getWeatherDetails function
         var cityName = data.name;
@@ -82,7 +80,7 @@ var getCityDetails = city => {
         var prevSearch = cities.includes(cityName);
         if (!prevSearch) {
           cities.push(cityName);
-          //   saveCities();
+          saveCities();
           displaySearchedCities(cityName);
         }
 
@@ -133,17 +131,14 @@ var displayCityDetails = (data, city) => {
   );
 
   headerCityDateEl.textContent = city + ' (' + currentDate + ')';
-  headerCityDateEl.setAttribute(
-    'class',
-    'border border-blue-500 bg-white p-2 m-2 rounded-md'
-  );
+  headerCityDateEl.setAttribute('class', 'img');
 
   divCityHeader.appendChild(headerCityDateEl);
   divCityHeader.appendChild(currentIcon);
   cityContainerEl.appendChild(divCityHeader);
 
   var divCurrent = document.createElement('div');
-  divCurrent.setAttribute('class', 'border p-2 m-2');
+  divCurrent.setAttribute('class', 'p-2 m-2');
   var tempEl = document.createElement('p');
   tempEl.setAttribute('class', 'border rounded-md bg-white p-2 m-2');
   var windEl = document.createElement('p');
@@ -183,11 +178,11 @@ var displayForcasted = data => {
     var cardEl = document.createElement('div');
     cardEl.setAttribute(
       'class',
-      'bg-white rounded-lg p-6 drop-shadow-xl h-full'
+      'bg-slate-700 bg-opacity-75 rounded-lg p-6 drop-shadow-xl border border-blue-300 h-full'
     );
 
     var cardBodyEl = document.createElement('div');
-    cardBodyEl.setAttribute('class', 'text-left');
+    cardBodyEl.setAttribute('class', 'text-left p-4 m-4');
 
     var cardDateEl = document.createElement('h6');
     cardDateEl.setAttribute('class', 'p-2 m-2 text-lg font-bold');
@@ -242,6 +237,6 @@ var displayForcasted = data => {
   }
 };
 
-// loadCities();
+loadCities();
 
 userFormEl.addEventListener('submit', formSubmitHandler);
