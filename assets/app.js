@@ -25,23 +25,28 @@ var cities = [];
 //     localStorage.setItem("cities", JSON.stringify(cities));
 // }
 
-// var displaySearchedCities = (city) => {
-//     var cityCardEl = document.createElement("div");
-//     cityCardEl.setAttribute("class", "card");
-//     var cityCardNameEl = document.createElement("div");
-//     cityCardNameEl.setAttribute("class", "card-body searched-city");
-//     cityCardNameEl.textContent = city;
+// function working - addl styling to dynamically displayed elements done
+// revist event listener to show city details on click
+var displaySearchedCities = city => {
+  var cityCardEl = document.createElement('div');
+  cityCardEl.setAttribute(
+    'class',
+    'border rounded-md p-4 m-4 bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 text-center'
+  );
+  var cityCardNameEl = document.createElement('div');
+  cityCardNameEl.setAttribute('class', 'card-body searched-city');
+  cityCardNameEl.textContent = city;
 
-//     cityCardEl.appendChild(cityCardNameEl)
+  cityCardEl.appendChild(cityCardNameEl);
 
-//     cityCardEl.addEventListener("click", function () {
-//         getCityDetails(city);
-//     });
+  //   cityCardEl.addEventListener('click', function () {
+  //     getCityDetails(city);
+  //   });
 
-//     searchHistoryEl.appendChild(cityCardEl)
+  searchHistoryEl.appendChild(cityCardEl);
+};
 
-// }
-
+// grabbing user input (city) function working
 var formSubmitHandler = e => {
   e.preventDefault();
   // get value from input element
@@ -54,9 +59,9 @@ var formSubmitHandler = e => {
   } else {
     alert('Please enter a city name.');
   }
-  console.log(cityName);
 };
 
+// calling api and grabbing city detail based on user input
 var getCityDetails = city => {
   var apiURL =
     'https://api.openweathermap.org/data/2.5/weather?q=' +
@@ -77,11 +82,11 @@ var getCityDetails = city => {
         var prevSearch = cities.includes(cityName);
         if (!prevSearch) {
           cities.push(cityName);
-          saveCities();
+          //   saveCities();
           displaySearchedCities(cityName);
         }
 
-        getWeatherDetails(cityName, currentLat, currentLon);
+        // getWeatherDetails(cityName, currentLat, currentLon);
       });
     } else {
       alert('Error, this city could not be found.');
