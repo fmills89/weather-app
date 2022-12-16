@@ -548,6 +548,10 @@ body {
   display: flex;
 }
 
+.grid {
+  display: grid;
+}
+
 .h-24 {
   height: 6rem;
 }
@@ -562,6 +566,14 @@ body {
 
 .flex-none {
   flex: none;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .rounded-lg {

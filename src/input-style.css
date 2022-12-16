@@ -8,4 +8,11 @@
     @apply bg-gradient-to-r from-cyan-500
       to-blue-500 subpixel-antialiased;
   }
+  .card {
+    background-color: theme('colors.white');
+    border-radius: theme('borderRadius.lg');
+    padding: theme('spacing.6');
+    box-shadow: theme('boxShadow.xl');
+    height: 20rem;
+  }
 }
