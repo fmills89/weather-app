@@ -1,0 +1,23 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "User Story",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input-style.css -o ./public/output-style.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fmills89/weather-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fmills89/weather-app/issues"
+  },
+  "homepage": "https://github.com/fmills89/weather-app#readme",
+  "dependencies": {
+    "tailwindcss": "^3.2.4"
+  }
+}
