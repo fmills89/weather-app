@@ -30,7 +30,7 @@ var saveCities = () => {
 // revist event listener to show city details on click
 var displaySearchedCities = city => {
   var cityCardEl = document.createElement('div');
-  cityCardEl.setAttribute('class', 'button pl-2 ml-2');
+  cityCardEl.setAttribute('class', 'button');
   var cityCardNameEl = document.createElement('div');
   cityCardNameEl.setAttribute('class', 'card-body searched-city');
   cityCardNameEl.textContent = city;
@@ -131,7 +131,7 @@ var displayCityDetails = (data, city) => {
   );
 
   headerCityDateEl.textContent = city + ' (' + currentDate + ')';
-  headerCityDateEl.setAttribute('class', 'img');
+  headerCityDateEl.setAttribute('class', 'border p-4 m-4 rounded-lg');
 
   divCityHeader.appendChild(headerCityDateEl);
   divCityHeader.appendChild(currentIcon);
