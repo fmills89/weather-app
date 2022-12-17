@@ -131,7 +131,7 @@ var displayCityDetails = (data, city) => {
   );
 
   headerCityDateEl.textContent = city + ' (' + currentDate + ')';
-  headerCityDateEl.setAttribute('class', 'border p-4 m-4 rounded-lg');
+  headerCityDateEl.setAttribute('class', 'border p-4 m-4 rounded-lg gradient');
 
   divCityHeader.appendChild(headerCityDateEl);
   divCityHeader.appendChild(currentIcon);

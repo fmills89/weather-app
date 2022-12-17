@@ -16,12 +16,15 @@
     height: 20rem;
   }
   .button {
-    @apply p-2 m-2 rounded-md transition ease-in-out delay-100 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300;
+    @apply p-2 m-2 rounded-md bg-gradient-to-r from-blue-500 to-indigo-500;
   }
   .img {
     @apply border border-blue-500 bg-white p-2 m-2 rounded-md;
   }
   .card {
     @apply bg-white rounded-lg p-6 drop-shadow-xl h-full;
+  }
+  .gradient {
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500;
   }
 }
